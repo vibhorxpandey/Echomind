@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.venv/Scripts/python.exe scripts/query_cli.py \"why did HackNexus 2023 lose money?\")",
+      "Bash(.venv/Scripts/python.exe scripts/query_cli.py \"when is the annual fest held?\")"
+    ]
+  }
+}
