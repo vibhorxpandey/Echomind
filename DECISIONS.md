@@ -11,3 +11,7 @@
 - **Fictional entities**: Nexus Tech Club at "Kaveri Institute of Technology" (fictional), fictional people and sponsors throughout.
 - **Dev-up script**: `run.ps1` (Windows-native) and `run.sh` (Git Bash) — both install-if-needed, ingest-if-needed, then start backend (:8000) and frontend (:3000).
 - **ADK session service**: `InMemorySessionService` — conversation state resets on server restart, but long-term memory survives via the `agent_memory` Qdrant collection (that's the point of the feature).
+- **ADK worked first try (v2.3.0)** on Python 3.14 — the google-genai manual-loop fallback was never needed.
+- **Ablation metrics**: added Recall@1 and MRR@5 alongside Recall@5 — at 299 docs, recall@5 alone saturates (sparse also hits 15/15) and hides the hybrid+rerank advantage, which shows clearly in MRR (0.967 vs 0.922/0.822).
+- **API key hygiene**: a real Gemini key was pasted into `.env.example` locally. The committed version keeps the placeholder (`git update-index --assume-unchanged .env.example` guards against accidental commits); the real key lives in gitignored `.env`. If the key was ever shared anywhere public, rotate it after the hackathon.
+- **Trace buffer is a module-level list** reset per turn, not a contextvar — the demo server handles one chat at a time; concurrency-safe tracing wasn't worth the time.

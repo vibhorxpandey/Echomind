@@ -82,9 +82,16 @@ def get_event_history(event_name: str) -> dict:
     Returns:
         dict with 'documents': relevant docs sorted by year.
     """
-    out = hybrid_search(f"{event_name} event planning budget outcome post-mortem", top_k=8)
-    _record("get_event_history", {"event_name": event_name}, out)
-    docs = sorted(out["results"], key=lambda r: r["year"])
+    out = hybrid_search(f"{event_name} event planning budget outcome post-mortem", top_k=6)
+    timing = hybrid_search(f"{event_name} schedule timing date moved rescheduled decision", top_k=4)
+    _record("get_event_history", {"event_name": event_name, "facet": "history"}, out)
+    _record("get_event_history", {"event_name": event_name, "facet": "timing"}, timing)
+    seen, docs = set(), []
+    for r in out["results"] + timing["results"]:
+        if r["doc_id"] not in seen:
+            seen.add(r["doc_id"])
+            docs.append(r)
+    docs.sort(key=lambda r: r["year"])
     return {"documents": [
         {"title": r["title"], "doc_type": r["doc_type"], "year": r["year"],
          "content": r["content"]} for r in docs
@@ -126,7 +133,10 @@ Rules:
    proactively surface that history even if not directly asked.
 5. Use recall_conversation when the user references earlier discussions
    ("as we discussed", "last time", "again") or when past conversations would
-   add context.
+   add context. Memory is for conversational continuity ONLY - every factual
+   claim about club history MUST still be verified with search_knowledge or
+   get_event_history in this turn before you state it. Never answer a factual
+   question from memory context alone.
 6. Be concise but complete: a short direct answer first, then the supporting
    detail with citations. Use rupee amounts and concrete numbers from the docs.
 7. If the knowledge base has nothing relevant, say so honestly - never invent

@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "Bash(.venv/Scripts/python.exe scripts/query_cli.py \"why did HackNexus 2023 lose money?\")",
-      "Bash(.venv/Scripts/python.exe scripts/query_cli.py \"when is the annual fest held?\")"
+      "Bash(.venv/Scripts/python.exe scripts/query_cli.py \"when is the annual fest held?\")",
+      "Bash(.venv/Scripts/python.exe -m uvicorn backend.main:app --port 8000)",
+      "Bash(curl -s -m 2 http://localhost:8000/health)",
+      "Bash(break)",
+      "Bash(curl -s -m 120 -X POST http://localhost:8000/chat -H \"Content-Type: application/json\" -d '{\"message\":\"When is the annual fest held?\",\"session_id\":\"final-smoke\"}')",
+      "Bash(.venv/Scripts/python.exe -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('MODE:',d['mode'],'| TOOLS:',d['tool_calls'],'| TRACE:',len\\(d['retrieval_trace']\\),'events'\\); print\\(\\); print\\(d['answer'][:1400]\\)\")"
     ]
   }
 }

@@ -72,8 +72,9 @@ async def chat(req: ChatRequest):
     message = req.message
     if pre_memories:
         ctx = "\n".join(f"- {m['summary']}" for m in pre_memories)
-        message = (f"{req.message}\n\n[Context from your long-term memory of past "
-                   f"conversations - use if relevant:\n{ctx}]")
+        message = (f"{req.message}\n\n[Long-term memory: you discussed related topics "
+                   f"before. Use only to understand what the user refers to - you must "
+                   f"still verify all facts with your search tools this turn:\n{ctx}]")
 
     mode, tool_calls = "agent", []
     if ag.gemini_available():
