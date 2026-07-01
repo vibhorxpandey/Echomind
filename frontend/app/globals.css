@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: #0a0e14;
+  color: #e2e8f0;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #1c2636;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2a3a52;
+}
+
+.answer-md p { margin-bottom: 0.5rem; }
+.answer-md strong { color: #f1f5f9; }
+.answer-md ol, .answer-md ul { margin: 0.4rem 0 0.6rem 1.2rem; }
+.answer-md ol { list-style: decimal; }
+.answer-md ul { list-style: disc; }
+.answer-md li { margin-bottom: 0.3rem; }
