@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } fr
 import TracePanel from "@/components/TracePanel";
 import VideoBackground from "@/components/VideoBackground";
 import Landing from "@/components/Landing";
+import FoundersBadge from "@/components/FoundersBadge";
 import { ChatMessage, ChatResponse, MemoryHit, TraceEvent } from "@/lib/types";
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
@@ -298,6 +299,9 @@ export default function Home() {
           </motion.div>
         </motion.main>
       )}
+
+      {/* Persistent founding-team credit, bottom-right on every state */}
+      <FoundersBadge />
     </div>
   );
 }

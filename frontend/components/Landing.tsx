@@ -10,13 +10,6 @@ const SUGGESTIONS = [
   "How do we get budgets approved faster?",
 ];
 
-const FOUNDERS = [
-  { name: "Vibhor Pandey", tag: "Founder" },
-  { name: "Yuvraj Arora", tag: "Founder" },
-  { name: "Bhavya Dubey", tag: "Founder" },
-  { name: "Rohit Singh Rajawat", tag: "Founder" },
-];
-
 const HOW_IT_WORKS = [
   {
     k: "01",
@@ -241,34 +234,6 @@ export default function Landing({
                 </h3>
                 <p className="text-sm leading-relaxed text-slate-400">{s.role}</p>
               </div>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* ── FOUNDERS ── */}
-      <Section scrollRoot={scrollRef}>
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="mb-4 font-mono text-xs tracking-[0.3em] text-violet/70">FOUNDING TEAM</p>
-          <h2 className="mb-10 text-3xl font-bold text-slate-100 sm:text-4xl">
-            The minds behind EchoMind.
-          </h2>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {FOUNDERS.map((f, i) => (
-              <motion.div
-                key={f.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ root: scrollRef, amount: 0.4, once: false }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                className="rounded-2xl border border-edge bg-panel/60 p-6 backdrop-blur-md transition-all hover:border-violet/50 hover:shadow-[0_0_30px_rgba(139,92,246,0.2)]"
-              >
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-violet to-glow text-xl font-bold text-white shadow-lg">
-                  {f.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
-                </div>
-                <h3 className="mb-1 text-sm font-semibold text-slate-100">{f.name}</h3>
-                <p className="font-mono text-[11px] tracking-wider text-violet/70">{f.tag}</p>
-              </motion.div>
             ))}
           </div>
         </div>
