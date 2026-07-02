@@ -193,3 +193,10 @@ scripts/    query_cli.py, ablation.py
 docs/       architecture.md (Mermaid), demo_script.md
 DECISIONS.md  defaults chosen and why
 ```
+
+## Contributors
+
+- [@vibhorxpandey](https://github.com/vibhorxpandey) — Vibhor Pandey (Founder)
+- [@bd9839-source](https://github.com/bd9839-source) — Bhavya Dubey (Co-founder)
+- [@YuvrajArora06](https://github.com/YuvrajArora06) — Yuvraj Arora (Co-founder)
+- [@singhrajawat017-alt](https://github.com/singhrajawat017-alt) — Rohit Singh Rajawat (Co-founder)
