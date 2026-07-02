@@ -3,6 +3,14 @@
 > Institutional memory AI agent for college clubs.
 > **Google Agent Labs Hackathon 2026 · Problem Statement 2: Club & Community Intelligence Agent**
 
+[![Live Demo](https://img.shields.io/badge/▶%20Live%20Demo-echomindai.vercel.app-8b5cf6?style=for-the-badge)](https://echomindai.vercel.app)
+[![Demo Video](https://img.shields.io/badge/🎥%20Demo%20Video-Google%20Drive-22d3ee?style=for-the-badge&logo=googledrive&logoColor=white)](https://drive.google.com/drive/folders/1GVJzmqEvkj0YASq8xz5GMRGNgEnM3SVb?usp=sharing)
+
+**🔗 Live app:** https://echomindai.vercel.app
+**🎥 Demo video:** https://drive.google.com/drive/folders/1GVJzmqEvkj0YASq8xz5GMRGNgEnM3SVb?usp=sharing
+
+> Live chat calls a locally-run backend on `localhost:8000` (see [Setup](#setup)); the landing, retrieval-trace UI and demo video are fully live on the hosted link above.
+
 ## The problem
 
 Every May, college clubs suffer a lobotomy. The seniors graduate — and with them goes
@@ -38,7 +46,48 @@ Google ADK root agent "echomind" (Gemini 2.5 Flash)
                                            RRF fusion → cross-encoder rerank)
 ```
 
-Full diagram: [docs/architecture.md](docs/architecture.md).
+### Architecture diagram
+
+```mermaid
+flowchart TB
+    U["👤 Club member"] --> FE["Next.js 14 UI<br/>chat pane + retrieval-trace sidebar"]
+    FE -->|"POST /chat {message, session_id}"| API["FastAPI backend<br/>/chat · /ingest · /health"]
+
+    API -->|"pre-answer recall"| MEM[("Qdrant: agent_memory<br/>dense bge-small 384-d")]
+    API --> RUNNER["Google ADK Runner<br/>InMemorySessionService"]
+
+    subgraph AGENT["ADK root agent · echomind"]
+        LLM["Gemini 2.5 Flash<br/>(GOOGLE_API_KEY)"]
+        T1["search_knowledge<br/>(query, doc_type?, year?)"]
+        T2["get_member_info(name)"]
+        T3["get_event_history(event)"]
+        T4["recall_conversation(query)"]
+        LLM --> T1 & T2 & T3 & T4
+    end
+
+    RUNNER --> AGENT
+
+    subgraph RET["Hybrid retrieval pipeline (fastembed, CPU)"]
+        QV["query embed:<br/>dense bge-small-en-v1.5<br/>sparse Qdrant/bm25"]
+        FUSE["Qdrant Query API<br/>2× Prefetch → RRF fusion (top-20)"]
+        RR["cross-encoder rerank<br/>jina-reranker-v1-tiny-en → top-5"]
+        QV --> FUSE --> RR
+    end
+
+    T1 & T2 & T3 --> RET
+    FUSE --> KB[("Qdrant: club_knowledge<br/>299 docs · named vectors dense+sparse")]
+    T4 --> MEM
+
+    API -->|"post-answer: store (Q+A) summary"| MEM
+    API -.->|"fire-and-forget mirror<br/>(only if LYZR_API_KEY)"| LYZR["Lyzr Studio agent<br/>v3 inference API"]
+
+    RET -->|"per-tool-call trace<br/>(fused + rerank scores, rank Δ)"| API
+    API -->|"answer + retrieval_trace + memory_hits"| FE
+
+    ING["data/generate_dataset.py<br/>seeded, deterministic, 299 docs"] -->|"POST /ingest / startup"| KB
+```
+
+Data flow of one question + Qdrant collection schema: [docs/architecture.md](docs/architecture.md).
 
 ## How we use Google ADK
 
