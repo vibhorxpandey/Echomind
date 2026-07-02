@@ -123,6 +123,17 @@ before running `query_cli.py`/`ablation.py`.
 
 2.5-minute script with the exact queries: [docs/demo_script.md](docs/demo_script.md).
 
+## Team & roles
+
+Built by four founders, each owning a layer of the stack:
+
+| Founder | Role | Owned |
+| --- | --- | --- |
+| **Vibhor Pandey** | Founder · Agent & Retrieval | ADK agent design, Gemini integration, hybrid retrieval + cross-encoder rerank pipeline |
+| **Bhavya Dubey** | Co-founder · Frontend & Experience | Next.js UI, live retrieval-trace sidebar, 3D/video motion design, Vercel deploy |
+| **Yuvraj Arora** | Co-founder · Backend & Infrastructure | FastAPI service, Qdrant collections (`club_knowledge` + `agent_memory`), long-term memory wiring |
+| **Rohit Singh Rajawat** | Co-founder · Data & Evaluation | Synthetic dataset generator, retrieval ablation harness, architecture & demo docs |
+
 ## Repo map
 
 ```
