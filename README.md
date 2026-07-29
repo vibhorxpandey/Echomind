@@ -1,6 +1,6 @@
 # EchoMind — The Senior Who Never Graduates
 
-> Institutional memory AI agent for college clubs.
+> Institutional memory AI agent for college clubs
 > **Google Agent Labs Hackathon 2026 · Problem Statement 2: Club & Community Intelligence Agent**
 
 [![Live Demo](https://img.shields.io/badge/▶%20Live%20Demo-echomindai.vercel.app-8b5cf6?style=for-the-badge)](https://echomindai.vercel.app)
